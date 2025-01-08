@@ -53,6 +53,27 @@ export const receiveReportThunk = (id) => async dispatch => {
   }
 }
 
+export const createReportThunk = (report) => async dispatch => {
+  const response = await fetch(`/api/reports/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(report)
+  });
+
+  const newReport = await response.json();
+
+  console.log('\nresponse contents\n', newReport);
+
+  if (response.ok) {
+    dispatch(receiveReport(newReport));
+    return newReport;
+  } else {
+    return newReport.errors;
+  }
+} 
+
 export const removeReportThunk = (id) => async dispatch => {
   const response = await fetch(`/api/reports/${id}`, {
     method: 'DELETE'
