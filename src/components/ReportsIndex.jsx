@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReportIndexItem from './ReportIndexItem';
 import { resetDatabase } from '../mocks/storage';
-import { loadReportsThunk } from '../store/reports';
+import { loadReportsThunk, allReportsSelector } from '../store/reports';
 
 const ReportsIndex = () => {
-  const reports = []; // populate from Redux store
+  const reports = useSelector(allReportsSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {

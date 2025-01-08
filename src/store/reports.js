@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect';
+
 /** Action Type Constants: */
 export const LOAD_REPORTS = 'reports/LOAD_REPORTS';
 export const RECEIVE_REPORT = 'reports/RECEIVE_REPORT';
@@ -30,20 +32,17 @@ export const removeReport = (reportId) => ({
 // Your code here 
 export const loadReportsThunk = () => async dispatch => {
   const response = await fetch('/api/reports', { method: 'GET'});
-  console.log('response', response);
 
-  const reports = await response.json();
-  console.log('reports', reports);
-
-  // if (response.ok) {
-  //   const reports = await response.json();
-  //   console.log(reports);
-  //   // dispatch(loadReports(reports));
-
-  // }
+  if (response.ok) {
+    const reports = await response.json();
+    dispatch(loadReports(reports));
+  }
 }
 
 /** Selectors: */
+
+const selectAllReports = state => state.reports
+export const allReportsSelector = createSelector(selectAllReports, (reports) => Object.values(reports));
 
 /** Reducer: */
 
