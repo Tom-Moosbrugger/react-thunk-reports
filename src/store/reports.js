@@ -35,7 +35,33 @@ export const loadReportsThunk = () => async dispatch => {
 
   if (response.ok) {
     const reports = await response.json();
+
+    console.log(reports);
+
     dispatch(loadReports(reports));
+  }
+}
+
+export const receiveReportThunk = (id) => async dispatch => {
+  const response = await fetch(`/api/reports/${id}`);
+
+  if (response.ok) {
+    const report = await response.json();
+
+
+    dispatch(receiveReport(report));
+  }
+}
+
+export const removeReportThunk = (id) => async dispatch => {
+  const response = await fetch(`/api/reports/${id}`, {
+    method: 'DELETE'
+  });
+
+  // console.log(response);
+
+  if (response.ok) {
+    dispatch(removeReport(id));
   }
 }
 

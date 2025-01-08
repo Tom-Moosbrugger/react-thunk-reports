@@ -1,8 +1,14 @@
 import { Link } from 'react-router-dom';
+import { removeReportThunk } from '../store/reports';
+import { useDispatch } from 'react-redux';
 
 const ReportIndexItem = ({ report }) => {
+  const dispatch = useDispatch();
+
   const handleDelete = (e) => {
     e.preventDefault();
+
+    dispatch(removeReportThunk(report.id));
   };
 
   /* **DO NOT CHANGE THE RETURN VALUE** */
