@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { createReportThunk } from '../store/reports';
+import { createReportThunk, editReportThunk } from '../store/reports';
 
 const ReportForm = ({ report, formType }) => {
   const navigate = useNavigate();
@@ -15,7 +15,12 @@ const ReportForm = ({ report, formType }) => {
     
     report = { ...report, understanding, improvement };
 
-    const result = await dispatch(createReportThunk(report));
+    const result = formType === "Create Report" 
+      ? 
+      await dispatch(createReportThunk(report)) 
+      : 
+      await dispatch(editReportThunk(report));
+
 
     if (result.id) {
       navigate(`/reports/${result.id}`);

@@ -64,15 +64,32 @@ export const createReportThunk = (report) => async dispatch => {
 
   const newReport = await response.json();
 
-  console.log('\nresponse contents\n', newReport);
-
   if (response.ok) {
     dispatch(receiveReport(newReport));
     return newReport;
   } else {
     return newReport.errors;
   }
-} 
+}; 
+
+export const editReportThunk = (report) => async dispatch => {
+  const response = await fetch(`/api/reports/${report.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(report)
+  });
+
+  const editedReport = await response.json();
+
+  if (response.ok) {
+    dispatch(editReport(editedReport));
+    return editedReport;
+  } else {
+    return editedReport.errors;
+  }
+}; 
 
 export const removeReportThunk = (id) => async dispatch => {
   const response = await fetch(`/api/reports/${id}`, {
@@ -84,7 +101,7 @@ export const removeReportThunk = (id) => async dispatch => {
   if (response.ok) {
     dispatch(removeReport(id));
   }
-}
+};
 
 /** Selectors: */
 
